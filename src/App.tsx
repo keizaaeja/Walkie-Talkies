@@ -5,7 +5,6 @@ import {
   MapPin, 
   Search, 
   Compass, 
-  ShieldAlert, 
   X, 
   Sparkles, 
   Navigation,
@@ -15,6 +14,7 @@ import MapContainer from "./components/MapContainer";
 import ChatPanel from "./components/ChatPanel";
 import PlacesList from "./components/PlacesList";
 import PreferencesModal from "./components/PreferencesModal";
+import Page503 from "./components/Page503";
 import { Place, Message, UserPreferences } from "./types";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -546,59 +546,7 @@ function Dashboard() {
 // Global App wrapper rendering the Google Maps API Provider
 export default function App() {
   if (!hasValidKey) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-950 text-white font-sans p-6">
-        <div className="w-full max-w-md p-8 rounded-3xl border border-white/10 bg-slate-900/65 shadow-2xl backdrop-blur-lg text-center" id="setup-screen">
-          <div className="h-14 w-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto mb-5 shadow-lg shadow-amber-500/5">
-            <ShieldAlert className="h-7 w-7" />
-          </div>
-          
-          <h2 className="text-lg font-bold tracking-tight text-slate-100 mb-2">
-            Google Maps API Key Required
-          </h2>
-          <p className="text-xs text-slate-400 leading-relaxed mb-6">
-            A verified Google Maps Platform subscription is required to power local places scanning, reverse geocoding, and interactive map tiles.
-          </p>
-
-          <div className="space-y-4.5 text-left border-y border-white/5 py-5 mb-6">
-            <div className="flex gap-3">
-              <div className="h-5 w-5 rounded-full bg-slate-800 text-xs font-bold text-teal-400 flex items-center justify-center shrink-0">1</div>
-              <div>
-                <h4 className="text-xs font-bold text-slate-200">Prepare API Credentials</h4>
-                <p className="text-[11px] text-slate-500 mt-0.5">
-                  Securely activate an API Key at{" "}
-                  <a 
-                    href="https://console.cloud.google.com/google/maps-apis/start?utm_campaign=gmp-code-assist-ais" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-teal-300 hover:underline inline-flex items-center gap-0.5 font-medium"
-                  >
-                    Google Cloud Developer Console
-                  </a>
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <div className="h-5 w-5 rounded-full bg-slate-800 text-xs font-bold text-teal-400 flex items-center justify-center shrink-0">2</div>
-              <div>
-                <h4 className="text-xs font-bold text-slate-200">Add Key as Secret in AI Studio</h4>
-                <ul className="text-[10.5px] text-slate-500 list-disc ml-4 space-y-0.5 mt-1 leading-normal">
-                  <li>Click **Settings** (⚙️ gear icon, top-right panel)</li>
-                  <li>Click on the **Secrets** section</li>
-                  <li>Add custom secret with name: <code className="font-mono text-slate-300 bg-slate-950/50 px-1 rounded">GOOGLE_MAPS_PLATFORM_KEY</code></li>
-                  <li>Paste your verified API Key as value, and hit **Enter**</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <p className="text-[11px] text-slate-500 animate-pulse font-medium">
-            This workspace rebuilds automatically immediately once the key is added.
-          </p>
-        </div>
-      </div>
-    );
+    return <Page503 />;
   }
 
   return (
