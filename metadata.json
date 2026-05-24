@@ -1,0 +1,6 @@
+{
+  "name": "WalkieTalkies",
+  "description": "An AI travel chatbot offering walking-distance recommendations for cafes, museums, and attractions using Google Maps and geolocation.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
