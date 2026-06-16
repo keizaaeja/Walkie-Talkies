@@ -18,6 +18,7 @@ interface MapContainerProps {
   itinerary: Place[];
   onSelectPlace: (place: Place | null) => void;
   onAskAIAboutPlace: (place: Place) => void;
+  onToggleItinerary?: (place: Place) => void;
 }
 
 // Custom Route Display with computeRoutes
@@ -54,7 +55,7 @@ function ItineraryPath({
         const polylines = routes[0].createPolylines();
         polylines.forEach(p => {
           p.setOptions({
-            strokeColor: "#38bdf8", 
+            strokeColor: "#ea580c", 
             strokeOpacity: 0.85,
             strokeWeight: 5,
           });
@@ -84,14 +85,18 @@ function MapMarker({
   place,
   isSelected,
   isOpen,
+  isInItinerary,
   onSelect,
-  onAskAI
+  onAskAI,
+  onToggleItinerary
 }: {
   place: Place;
   isSelected: boolean;
   isOpen: boolean;
+  isInItinerary: boolean;
   onSelect: () => void;
   onAskAI: () => void;
+  onToggleItinerary?: () => void;
   key?: string;
 }) {
   const [markerRef, marker] = useAdvancedMarkerRef();
@@ -137,8 +142,8 @@ function MapMarker({
             onSelect(); // This will deselect the place, closing the popup
           }}
         >
-          <div className="p-2 text-slate-800 min-w-44 max-w-64 font-sans">
-            <div className="flex items-center gap-1.5 mb-1.5">
+          <div className="p-1.5 text-slate-800 min-w-[220px] max-w-[280px] font-sans overflow-hidden select-none">
+            <div className="flex items-center justify-between mb-1.5 gap-2">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono">
                 {place.category === "cafe" && "Cafe"}
                 {place.category === "museum" && "Museum"}
@@ -146,13 +151,13 @@ function MapMarker({
                 {place.category === "activity" && "Activity"}
               </span>
               {place.distanceMeters !== undefined && (
-                <span className="text-[10px] bg-sky-50 text-sky-700 px-1.5 py-0.5 rounded font-bold font-mono">
+                <span className="text-[10px] bg-slate-900 border border-slate-950 text-white px-2 py-0.5 rounded-full font-bold font-mono">
                   {place.distanceMeters}m
                 </span>
               )}
             </div>
 
-            <h4 className="text-sm font-bold text-slate-900 leading-snug mb-1">
+            <h4 className="text-xs font-bold text-slate-900 leading-snug mb-1">
               {place.name}
             </h4>
 
@@ -170,15 +175,32 @@ function MapMarker({
               </p>
             )}
 
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onAskAI();
-              }}
-              className="mt-3.5 w-full bg-sky-500 hover:bg-sky-450 text-white font-bold flex items-center justify-center gap-1 py-1.5 px-3 rounded-lg text-xs tracking-tight transition-all active:scale-95 shadow-md shadow-sky-500/10"
-            >
-              Ask WalkieTalkies
-            </button>
+            <div className="flex gap-1.5 mt-3.5 w-full">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onAskAI();
+                }}
+                className="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-extrabold flex items-center justify-center gap-1 py-2 px-2 rounded-xl text-[10px] sm:text-xs tracking-tight transition-all active:scale-95 shadow-md shadow-slate-950/10"
+              >
+                Ask WaTi
+              </button>
+              {onToggleItinerary && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleItinerary();
+                  }}
+                  className={`flex-1 font-extrabold flex items-center justify-center gap-1 py-2 px-2 rounded-xl text-[10px] sm:text-xs tracking-tight transition-all active:scale-95 border ${
+                    isInItinerary
+                      ? "bg-slate-900 border-slate-900 text-white hover:bg-slate-850"
+                      : "bg-white border-slate-200 hover:bg-slate-50 text-slate-700 shadow-sm"
+                  }`}
+                >
+                  {isInItinerary ? "Saved" : "Add Path"}
+                </button>
+              )}
+            </div>
           </div>
         </InfoWindow>
       )}
@@ -192,7 +214,8 @@ export default function MapContainer({
   selectedPlace,
   itinerary,
   onSelectPlace,
-  onAskAIAboutPlace
+  onAskAIAboutPlace,
+  onToggleItinerary
 }: MapContainerProps) {
   const map = useMap();
 
@@ -212,7 +235,7 @@ export default function MapContainer({
   }, [map, selectedPlace]);
 
   return (
-    <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/5 shadow-2xl bg-[#020617]">
+    <div className="relative w-full h-full rounded-none md:rounded-b-[32px] md:rounded-t-none overflow-hidden border-none md:border md:border-white/60 shadow-none md:shadow-2xl bg-[#020617] backdrop-blur-md">
       <Map
         defaultCenter={userLocation || { lat: 37.7749, lng: -122.4194 }}
         defaultZoom={15}
@@ -228,9 +251,9 @@ export default function MapContainer({
           <AdvancedMarker position={userLocation} title="You correspond here">
             {/* Glowing user position custom HTML pin */}
             <div className="relative flex items-center justify-center" style={{ width: 32, height: 32 }}>
-              <span className="absolute inline-flex h-full w-full rounded-full bg-sky-500/25 animate-ping opacity-75" />
-              <div className="relative h-4.5 w-4.5 rounded-full bg-sky-400 border-[3px] border-[#020617] shadow-xl flex items-center justify-center accent-glow">
-                <div className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+              <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500/25 animate-ping opacity-75" />
+              <div className="relative h-5 w-5 rounded-full bg-slate-950 border-[3px] border-white shadow-xl flex items-center justify-center">
+                <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
               </div>
             </div>
           </AdvancedMarker>
@@ -243,8 +266,10 @@ export default function MapContainer({
             place={place}
             isSelected={selectedPlace?.id === place.id || itinerary.some(p => p.id === place.id)}
             isOpen={selectedPlace?.id === place.id}
+            isInItinerary={itinerary.some(p => p.id === place.id)}
             onSelect={() => onSelectPlace(place)}
             onAskAI={() => onAskAIAboutPlace(place)}
+            onToggleItinerary={onToggleItinerary ? () => onToggleItinerary(place) : undefined}
           />
         ))}
 
@@ -263,10 +288,10 @@ export default function MapContainer({
         )}
       </Map>
 
-      {/* Floating coordinates indicator (Sleek minimalist style) */}
+      {/* Floating coordinates indicator (Sleek minimalist style, hidden on desktop view) */}
       {userLocation && (
-        <div className="absolute top-4 left-4 z-10 backdrop-blur-md bg-[#020617]/75 border border-white/10 rounded-full px-4 py-1.5 flex items-center gap-2 text-slate-200 shadow-xl pointer-events-none">
-          <Navigation className="h-3.5 w-3.5 text-sky-400 animate-pulse rotate-45" />
+        <div className="absolute top-4 left-4 z-10 backdrop-blur-md bg-[#020617]/75 border border-white/10 rounded-full px-4 py-1.5 flex items-center gap-2 text-slate-200 shadow-xl pointer-events-none md:hidden">
+          <Navigation className="h-3.5 w-3.5 text-emerald-400 animate-pulse rotate-45" />
           <span className="text-[10px] font-mono tracking-wider font-bold text-slate-300">
             {userLocation.lat.toFixed(4)}°, {userLocation.lng.toFixed(4)}°
           </span>

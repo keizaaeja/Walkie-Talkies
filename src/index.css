@@ -1,29 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@600;700;800;900&display=swap');
 @import "tailwindcss";
-
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @theme {
   --font-sans: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-logo: "Outfit", sans-serif;
 }
 
-/* Brighter theme */
+/* Base Body Styles matching Behance layout background */
+body {
+  background-color: #f2f3f7;
+  overflow: hidden;
+}
+
+/* Grey Glassmorphism Panel: Translucent overlay with frosted-glass effect */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(24px) saturate(120%);
+  -webkit-backdrop-filter: blur(24px) saturate(120%);
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.03),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    0 20px 48px -12px rgba(15, 23, 42, 0.05);
 }
 
+/* Glass Card: Float cards on top of glass-panel */
 .glass-card {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 
+    0 10px 25px -5px rgba(15, 23, 42, 0.03),
+    0 4px 12px -2px rgba(15, 23, 42, 0.02);
+}
+
+/* Selected Active Glass states */
+.glass-card-selected {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(14, 165, 233, 0.4);
+  box-shadow: 
+    0 12px 28px -4px rgba(14, 165, 233, 0.08),
+    0 2px 8px -2px rgba(14, 165, 233, 0.04);
 }
 
 .accent-glow {
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+  box-shadow: 0 0 24px rgba(14, 165, 233, 0.25);
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -33,4 +56,26 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Ambient Sphere Glow Animation or static gradients */
+.ambient-blob-1 {
+  background: radial-gradient(circle, rgba(236, 207, 149, 0.45) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.ambient-blob-2 {
+  background: radial-gradient(circle, rgba(203, 236, 149, 0.45) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.ambient-blob-3 {
+  background: radial-gradient(circle, rgba(204, 216, 237, 0.55) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+/* Disable Google Maps default InfoWindow scrollbars */
+.gm-style-iw-d {
+  overflow: hidden !important;
+}
+.gm-style-iw-c {
+  padding: 10px !important;
+}
+
 
