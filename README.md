@@ -1,6 +1,6 @@
 # WalkieTalkies
 
-WalkieTalkies is an intelligent, AI-powered walking companion designed to help you discover the hidden gems within walking distance of your current location. Whether you're looking for a cozy café, a fascinating museum, a landmark, or a quiet park, WalkieTalkies provides curated, personalized itineraries to guide your journey.
+WalkieTalkies is an intelligent, walking companion designed to help you discover the hidden gems within walking distance of your current location. Whether you're looking for a cozy café, a fascinating museum, a landmark, or a quiet park, WalkieTalkies provides curated, personalized itineraries to guide your journey.
 
 ## Features
 
@@ -8,7 +8,6 @@ WalkieTalkies is an intelligent, AI-powered walking companion designed to help y
 - **Interactive Map:** Explore your surroundings in real-time, visualizing recommendations directly on the map.
 - **Smart Itinerary Builder:** Easily add or remove places to build your perfect walking route, which is dynamically calculated based on your selections.
 - **Personalized Experience:** Adjust your walking pace and range in the settings to ensure that your trek suits your style and energy level.
-- **Concierge by Keiza:** A tailored interface designed for seamless discovery.
 
 ## How it Works
 
